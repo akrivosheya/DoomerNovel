@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -11,13 +10,14 @@ namespace UI
     {
         public string Message { set => _message.text = value; }
 
-        private UnityEvent _onConfirm = new UnityEvent();
+        [SerializeField] private Text _message;
 
-        private Text _message;
+        private UnityEvent _onConfirm = new UnityEvent();
 
 
         public void AddListenerOnConfirm(UnityAction onConfirmAction)
         {
+            _onConfirm.RemoveAllListeners();
             _onConfirm.AddListener(onConfirmAction);
         }
 

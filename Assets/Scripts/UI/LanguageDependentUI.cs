@@ -1,27 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 using Configurations;
 using Data;
 
 namespace UI
 {
-    public class LanguageDependentUI : MonoBehaviour
+    public abstract class LanguageDependentUI : MonoBehaviour, IActivatingUIElement
     {
-        [SerializeField] private GameObject _button;
-        [SerializeField] private Text _buttonText;
+        protected ConfigurationsManagerSO ConfigurationsManager { get => _configurationsManager; }
+        protected string CurrentLanguage { get => _languageManager.CurrentLanguage; }
+        protected bool HasLanguageMismatch { get => _isNotNotified; }
 
-        [SerializeField] private ConfigurationsManagerSO _configurationsManager;
         [SerializeField] private ConfigurationSubject _configurationSubject;
+        [SerializeField] private ConfigurationsManagerSO _configurationsManager;
         [SerializeField] private LanguageManagerSO _languageManager;
 
-        [SerializeField] private string _stringsConfigurationKey = "language";
-        [SerializeField] private string _buttonType;
-
-        private string _currentLanguage;
-        private bool _hasToChangeText = true;
+        private string _lastLanguage = "";
+        private bool _isNotNotified = false;
 
 
         void Awake()
@@ -34,26 +31,30 @@ namespace UI
             _configurationSubject.RemoveListener(OnConfigurationEvent);
         }
 
-        void SetActive(bool isActive)
-        {
-            _button.SetActive(isActive);
-
-            if (isActive && _hasToChangeText)
-            {
-                _buttonText.text = _languageManager.GetText(_buttonType);
-            }
-        }
-
         public void OnConfigurationEvent()
         {
-            string newLanguage = _configurationsManager.GetStringConfiguration(_stringsConfigurationKey);
-            if (_currentLanguage == newLanguage)
+            if (CurrentLanguage == _lastLanguage)
             {
                 return;
             }
 
-            _currentLanguage = newLanguage;
-            _hasToChangeText = true;
+            _lastLanguage = CurrentLanguage;
+            _isNotNotified = true;
+
+            UpdateLanguageDependentContext();
+        }
+
+        public abstract void SetActive(bool isActive);
+
+        protected virtual void UpdateLanguageDependentContext()
+        {
+
+        }
+
+        protected string GetText(string key)
+        {
+            _isNotNotified = false;
+            return _languageManager.GetText(key);
         }
     }
 }

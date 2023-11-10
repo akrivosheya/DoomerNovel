@@ -13,6 +13,7 @@ namespace UI
 
         public void AddListenerOnDeny(UnityAction onDenyAction)
         {
+            _onDeny.RemoveAllListeners();
             _onDeny.AddListener(onDenyAction);
         }
 
