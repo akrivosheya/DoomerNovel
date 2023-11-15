@@ -1,0 +1,7 @@
+image=Image;
+imageAnimation=ImageAnimation;
+window=DialogueWindow;
+text=Text;
+textAnimation=TextAnimation;
+choices=ChoicesList;
+interaction=Interaction

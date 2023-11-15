@@ -6,6 +6,7 @@ namespace Dialogue
     public class InkDialogue : IDialogue
     {
         public bool CanContinue { get => _story.canContinue; }
+        public bool HasChoices { get => throw new System.NotImplementedException(); }
 
         private Story _story;
 

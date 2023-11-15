@@ -2,18 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Factory;
+using Data;
 
 namespace Dialogue
 {
-    [CreateAssetMenu(fileName="DialogueManager")]
-    public class DialogueManager : ScriptableObject
+    [CreateAssetMenu(fileName="DialogueManagerSO")]
+    public class DialogueManagerSO : ScriptableObject
     {
         public bool CanContinue { get { return !(_currentDialogue is null || !_currentDialogue.CanContinue); } }
 
-        [SerializeField] private IDialogueLoader _loader;
+        [SerializeField] private DialogueLoaderSO _loader;
         [SerializeField] private int _minElementsCount = 2;
         [SerializeField] private int _typeIndex = 0;
-        [SerializeField] private int _parametersIndex = 0;
+        [SerializeField] private int _parametersIndex = 1;
         [SerializeField] private char _elementsDelim = ':';
         [SerializeField] private char _parametersDelim = ',';
 
@@ -23,16 +24,9 @@ namespace Dialogue
         private readonly string _emptyString = "";
 
 
-        public void InitializeDialogue(string objectName, string sceneName)
+        public void LoadDialogue()
         {
-            if(_currentObject == objectName && _currentScene == sceneName)
-            {
-                _currentDialogue.Reset();
-            }
-            if(_loader.TryLoadDialogue(objectName, sceneName, out IDialogue dialogue))
-            {
-                _currentDialogue = dialogue;
-            }
+            _currentDialogue = _loader.LoadDialogue();
         }
 
         public void Continue()
