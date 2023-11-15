@@ -4,8 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-using Data;
-
 namespace UI
 {
     public class SettingsUI : MenuElementsContainerUI
@@ -13,14 +11,10 @@ namespace UI
         [SerializeField] private SoundConfigurationUI _soundConfiguration;
         [SerializeField] private SoundConfigurationUI _musicConfiguration;
         [SerializeField] private LanguageConfigurationUI _languageConfiguration;
-        [SerializeField] private LanguageManagerSO _languageManager;
-
-        [SerializeField] private GameObject _confirmWindowPrefab;
 
         [SerializeField] private string _confirmMessage = "confirmSettings";
         [SerializeField] private string _backMessage = "backSettings";
 
-        private GameObject _confirmWindow;
         private UnityEvent _onApplySettings = new UnityEvent();
         private UnityEvent _onBackSettings = new UnityEvent();
         private List<IConfigurationUI> _configurations = new List<IConfigurationUI>();
@@ -88,21 +82,6 @@ namespace UI
             _activatingUIs.Add(_musicConfiguration);
             _activatingUIs.Add(_languageConfiguration);
         }
-
-        private void ShowConfirmWindow(string message, UnityAction onConfirm, UnityAction onDeny)
-        {
-            _confirmWindow = Instantiate(_confirmWindowPrefab);
-            if (!(_confirmWindow is null) && _confirmWindow.TryGetComponent(out ConfirmWindowUI confirmWindowConfiguration))
-            {
-                _confirmWindow.transform.SetParent(transform);
-                _confirmWindow.transform.localScale = Vector3.one;
-                _confirmWindow.transform.localPosition = Vector3.zero;
-
-                confirmWindowConfiguration.Message = _languageManager.GetText(message);
-                confirmWindowConfiguration.AddListenerOnConfirm(onConfirm);
-                confirmWindowConfiguration.AddListenerOnDeny(onDeny);
-            }
-        }
         
         private void OnConfirmSettings()
         {
@@ -129,12 +108,6 @@ namespace UI
         private void OnDenyBack()
         {
             DestroyWindow();
-        }
-
-        private void DestroyWindow()
-        {
-            Destroy(_confirmWindow);
-            _confirmWindow = null;
         }
     }
 }
