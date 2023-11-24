@@ -24,5 +24,15 @@ namespace UI.Dialogue.Elements
         {
             _text.gameObject.SetActive(isActive);
         }
+
+        public override Rect GetRect()
+        {
+            return _text.rectTransform.rect;
+        }
+
+        public void SetText(string text)
+        {
+            _text.text = text;
+        }
     }
 }

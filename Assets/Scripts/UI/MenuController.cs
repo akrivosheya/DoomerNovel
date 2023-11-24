@@ -39,6 +39,11 @@ namespace UI
             _presenter.StartGame();
         }
 
+        public void OnFinishGame()
+        {
+            _mainMenu.SetActive(true);
+        }
+
         public void OnClickSettings()
         {
             _mainMenu.SetActive(false);

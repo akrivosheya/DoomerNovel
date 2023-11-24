@@ -28,13 +28,25 @@ namespace UI.Dialogue.Elements
             }
         }
 
+        public override void Clear()
+        {
+            foreach (DialogueUIElement child in Childs)
+            {
+                child.Clear();
+                Destroy(child.gameObject);
+            }
+
+            Childs.Clear();
+        }
+
         public override bool TryGetChild(string id, out DialogueUIElement foundChild)
         {
             foundChild = default;
             int childIndex = Childs.FindIndex(child => child.ID == id);
-            if (childIndex < 0)
+            if (childIndex >= 0)
             {
-                return false;
+                foundChild = Childs[childIndex];
+                return true;
             }
 
             if (_cache.TryGetChild(id, out DialogueUIElement possibleContainer))
@@ -66,6 +78,14 @@ namespace UI.Dialogue.Elements
             foreach (DialogueUIElement child in Childs)
             {
                 child.SetActive(isActive);
+            }
+        }
+
+        public override void InterruptPresentation()
+        {
+            foreach (DialogueUIElement child in Childs)
+            {
+                child.InterruptPresentation();
             }
         }
 

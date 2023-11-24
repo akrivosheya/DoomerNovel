@@ -14,6 +14,7 @@ namespace UI.Dialogue.Elements
 
         public void AddId(string descendentId, DialogueUIElement child)
         {
+            RemoveId(descendentId);
             _cache.Add(descendentId, (child, Time.realtimeSinceStartup));
             int count = _cache.Count;
             if (count > MaxCacheSize)
@@ -28,7 +29,7 @@ namespace UI.Dialogue.Elements
             if (_cache.ContainsKey(descendentId))
             {
                 child = _cache[descendentId].child;
-                _cache.Add(descendentId, (child, Time.realtimeSinceStartup));
+                AddId(descendentId, child);
                 return true;
             }
 
@@ -38,7 +39,10 @@ namespace UI.Dialogue.Elements
 
         public void RemoveId(string descendentId)
         {
-            _cache.Remove(descendentId);
+            if (_cache.ContainsKey(descendentId))
+            {
+                _cache.Remove(descendentId);
+            }
         }
     }
 }

@@ -390,6 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2958d127c4ba33a4da7e61531342249f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _menuController: {fileID: 1866083880}
   _dialogueManager: {fileID: 11400000, guid: d708ebf270aa00f48bf5c860f07a553d, type: 2}
   _factory: {fileID: 11400000, guid: 71ca0c369e672cf4a88a304516f4dd10, type: 2}
   _dialogueRoot: {fileID: 652006807}
@@ -1357,10 +1358,13 @@ MonoBehaviour:
   _id: _
   _defaultId: _
   _idIndex: 0
-  _xPositionIndex: 0
-  _yPositionIndex: 1
+  _xPositionIndex: 1
+  _yPositionIndex: 2
   _factory: {fileID: 11400000, guid: 1886c32b29e483a43b14f80b86249802, type: 2}
   _childs: []
+  _currentState: {fileID: 11400000, guid: 2a51e95b3e5f645418327d43787ac1b1, type: 2}
+  _firstState: {fileID: 11400000, guid: 2ec19942bac21cf458408cde032046e1, type: 2}
+  _pauseState: {fileID: 11400000, guid: 2a51e95b3e5f645418327d43787ac1b1, type: 2}
   _emptyId: _
 --- !u!1 &683738538
 GameObject:

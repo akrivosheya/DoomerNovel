@@ -24,10 +24,12 @@ namespace UI.Dialogue.Elements
             transform.SetParent(parent.transform);
         }
         
+        public abstract Rect GetRect();
+        public virtual void InterruptPresentation() { }
         public virtual FactorySO<DialogueUIElement> GetFactory() => Parent.GetFactory();
         public virtual void SetActive(bool isActive) { }
         public virtual void SetChild(DialogueUIElement child) { }
-        public virtual Rect GetRect() => Rect.zero;
+        public virtual void Clear() { }
         
         public virtual void Initialize(params string[] initParameters)
         {
