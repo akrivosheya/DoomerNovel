@@ -12,7 +12,7 @@ namespace UI.Dialogue.Elements
 
         public override void Initialize(params string[] initParameters)
         {
-            base.Initialize();
+            base.Initialize(initParameters);
 
             if (initParameters.Length > _textIndex)
             {

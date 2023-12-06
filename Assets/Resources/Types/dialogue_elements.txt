@@ -4,4 +4,5 @@ window=DialogueWindow;
 text=Text;
 textAnimation=TextAnimation;
 choices=ChoicesList;
+choice=ChoiceWindow;
 interaction=Interaction

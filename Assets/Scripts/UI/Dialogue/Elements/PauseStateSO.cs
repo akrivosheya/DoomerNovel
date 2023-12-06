@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace UI.Dialogue.Elements
@@ -7,10 +5,10 @@ namespace UI.Dialogue.Elements
     [CreateAssetMenu(fileName="PauseStateSO")]
     public class PauseStateSO : DialogueStateSO
     {
-        public override void HandleEvent(Events.Event newEvent) { }
+        public override void HandleEvent(Events.Event newEvent, Events.EventHandlersManager eventsManager) { }
 
-        public override void StateLateUpdate(Dictionary<Events.Event.EventTypes, Action<Events.Event>> handlers, DialogueUIElement dialogueRoot) { }
+        public override void StateLateUpdate(DialogueUIRoot dialogueRoot, Events.EventHandlersManager eventsManager) { }
 
-        public override void StateUpdate() {}
+        public override void StateUpdate(Events.EventHandlersManager eventsManager) {}
     }
 }

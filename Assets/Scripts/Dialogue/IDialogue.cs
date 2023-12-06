@@ -10,6 +10,8 @@ namespace Dialogue
         public void Reset();
         public void Continue();
         public string GetText();
+        public string GetChoiceText(int choiceId);
+        public void MakeChoice(int choiceId);
         public List<string> GetMetadata();
     }
 }

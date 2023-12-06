@@ -19,8 +19,6 @@ namespace Dialogue
         [SerializeField] private char _parametersDelim = ',';
 
         private IDialogue _currentDialogue;
-        private string _currentObject;
-        private string _currentScene;
         private readonly string _emptyString = "";
 
 
@@ -47,6 +45,27 @@ namespace Dialogue
             {
                 return _emptyString;
             }
+        }
+
+        public string GetChoiceText(int choiceId)
+        {
+            if (!_currentDialogue.HasChoices)
+            {
+                return _emptyString;
+            }
+
+            return _currentDialogue.GetChoiceText(choiceId);
+        }
+
+        public void MakeChoice(int choiceId)
+        {
+            if (choiceId < 0)
+            {
+                Debug.LogError($"choice index must be integet more than 0");
+                return;
+            }
+
+            _currentDialogue.MakeChoice(choiceId);
         }
 
         public List<InitialData> GetCommandsData()

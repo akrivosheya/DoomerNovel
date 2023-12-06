@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Dialogue
@@ -31,6 +32,8 @@ namespace Dialogue
         public void Reset() => _index = 0;
         public void Continue() => _index++;
         public string GetText() => Texts[_index];
+        public string GetChoiceText(int choiceId) => throw new NotImplementedException();
+        public void MakeChoice(int choiceId) => throw new NotImplementedException();
         public List<string> GetMetadata() => Metadatas[_index];
     }
 }

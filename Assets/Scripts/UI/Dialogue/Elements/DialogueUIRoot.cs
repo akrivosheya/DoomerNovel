@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Factory;
-using Events = UI.Dialogue.Events;
 
 namespace UI.Dialogue.Elements
 {
@@ -12,14 +11,15 @@ namespace UI.Dialogue.Elements
         [SerializeField] private DialogueStateSO _currentState;
         [SerializeField] private DialogueStateSO _firstState;
         [SerializeField] private DialogueStateSO _pauseState;
+        [SerializeField] private DialogueStateSO _choiceState;
         [SerializeField] private string _emptyId = "_";
 
-        private Dictionary<Events.Event.EventTypes, Action<Events.Event>> _handlers = new Dictionary<Events.Event.EventTypes, Action<Events.Event>>();
+        private readonly Events.EventHandlersManager _eventsManager = new Events.EventHandlersManager();
 
 
         void Awake() => ElementsFactory.Initialize();
-        void Update() => _currentState.StateUpdate();
-        void LateUpdate() => _currentState.StateLateUpdate(_handlers, this);
+        void Update() => _currentState.StateUpdate(_eventsManager);
+        void LateUpdate() => _currentState.StateLateUpdate(this, _eventsManager);
 
         public void AddElement(InitialData initialData, string containerId)
         {
@@ -38,8 +38,19 @@ namespace UI.Dialogue.Elements
             }
         }
 
-        public void Reset() => _currentState = _firstState;
+        public void Reset()
+        {
+            _eventsManager.ClearEvents();
+            _firstState.Reset();
+            _pauseState.Reset();
+            _choiceState.Reset();
+            _currentState = _firstState;
+        }
+
+        public override void HandleEvent(Events.Event currentEvent) => _currentState.HandleEvent(currentEvent, _eventsManager);
         public void Pause() => _currentState = _pauseState;
-        public void SetHandler(Events.Event.EventTypes eventType, Action<Events.Event> handler) => _handlers.Add(eventType, handler);
+        public void BeginChoice() => _currentState = _choiceState;
+
+        public void SetHandler(Events.Event.EventTypes eventType, Action<Events.Event> handler) => _eventsManager.SetHandler(eventType, handler);
     }
 }

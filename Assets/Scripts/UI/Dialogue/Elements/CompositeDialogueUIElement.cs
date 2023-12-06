@@ -37,35 +37,39 @@ namespace UI.Dialogue.Elements
             }
 
             Childs.Clear();
+            _cache.Clear();
         }
 
-        public override bool TryGetChild(string id, out DialogueUIElement foundChild)
+        public override bool TryGetChild(Stack<string> ids, out DialogueUIElement foundChild)
         {
             foundChild = default;
-            int childIndex = Childs.FindIndex(child => child.ID == id);
+            string currentChildId = ids.Peek();
+            int childIndex = Childs.FindIndex(child => child.ID == currentChildId);
             if (childIndex >= 0)
             {
-                foundChild = Childs[childIndex];
-                return true;
+                if (TryGetChild(ids, out foundChild, Childs[childIndex]))
+                {
+                    return true;
+                }
             }
 
-            if (_cache.TryGetChild(id, out DialogueUIElement possibleContainer))
+            if (_cache.TryGetChild(currentChildId, out DialogueUIElement possibleContainer))
             {
-                if (possibleContainer.TryGetChild(id, out foundChild))
+                if (possibleContainer.TryGetChild(ids, out foundChild))
                 {
                     return true;
                 }
                 else
                 {
-                    _cache.RemoveId(id);
+                    _cache.RemoveId(ids.Peek());
                 }
             }
 
             foreach (DialogueUIElement child in Childs)
             {
-                if (child.TryGetChild(id, out foundChild))
+                if (child.TryGetChild(ids, out foundChild))
                 {
-                    _cache.AddId(id, child);
+                    _cache.AddId(currentChildId, child);
                     return true;
                 }
             }

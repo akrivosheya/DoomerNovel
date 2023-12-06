@@ -4,4 +4,5 @@ choices=UI.Dialogue.ChoicesSetter;
 add=UI.Dialogue.UIElementAdder;
 audio=UI.Dialogue.AudioLauncher;
 remove=UI.Dialogue.UIElementRemover;
-default=UI.Dialogue.DefaultInitialization
+default=UI.Dialogue.DefaultInitialization;
+clear=UI.Dialogue.Clearer

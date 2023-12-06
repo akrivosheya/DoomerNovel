@@ -52,6 +52,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
   _id: MainChoicesList
   _defaultId: _
+  _idsSeparator: 46
   _idIndex: 0
   _xPositionIndex: 1
   _yPositionIndex: 2
@@ -60,4 +61,4 @@ MonoBehaviour:
   _interactionWrapperId: interaction
   _idDelim: _
   _interactionEvent: choice
-  _choicesOffset: 50
+  _choicesOffset: 70

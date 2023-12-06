@@ -17,11 +17,27 @@ namespace UI.Dialogue
         [SerializeField] private FactorySO<IDialoguePresenterBehaviour> _factory;
         [SerializeField] private DialogueUIRoot _dialogueRoot;
 
+        private readonly string _idKey = "id";
+
 
         void Awake()
         {
             _factory.Initialize();
             _dialogueRoot.SetHandler(Events.Event.EventTypes.Continue, (currentEvent) => Next());
+            _dialogueRoot.SetHandler(Events.Event.EventTypes.BeginChoice, (currentEvent) =>
+            {
+                _dialogueRoot.BeginChoice();
+            });
+            _dialogueRoot.SetHandler(Events.Event.EventTypes.EndChoice, (currentEvent) =>
+            {
+                if (currentEvent.HasIntValue(_idKey))
+                {
+                    int choiceIndex = currentEvent.GetIntValue(_idKey);
+                    _dialogueManager.MakeChoice(choiceIndex);
+                    _dialogueRoot.Reset();
+                    DoBehaviours();
+                }
+            });
         }
 
         public void StartGame()
@@ -47,6 +63,8 @@ namespace UI.Dialogue
         }
 
         public string GetText() => _dialogueManager.GetText();
+
+        public string GetChoiceText(int choiceId) => _dialogueManager.GetChoiceText(choiceId);
 
         public void AddElement(string elementType, string containerId, params string[] initParameters)
         {

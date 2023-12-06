@@ -7,6 +7,7 @@ namespace UI.Dialogue
     public class TextSetter : IDialoguePresenterBehaviour
     {
         private readonly int ElementIdIndex = 0;
+        private readonly int ChoiceIdIndex = 1;
 
         public void DoBehaviour(DialoguePresenter presenter, params string[] parameters)
         {
@@ -16,7 +17,23 @@ namespace UI.Dialogue
                 return;
             }
 
-            string text = presenter.GetText();
+            string text = "";
+            if (parameters.Length > ChoiceIdIndex)
+            {
+                if (int.TryParse(parameters[ChoiceIdIndex], out int choiceId))
+                {
+                    text = presenter.GetChoiceText(choiceId);
+                }
+                else
+                {
+                    Debug.LogError($"{parameters[ChoiceIdIndex]} is not choice id");
+                }
+            }
+            else
+            {
+                text = presenter.GetText();
+            }
+
             if (!presenter.TryGetElement(parameters[ElementIdIndex], out DialogueUIElement element))
             {
                 Debug.LogError($"can't get element {parameters[ElementIdIndex]}");

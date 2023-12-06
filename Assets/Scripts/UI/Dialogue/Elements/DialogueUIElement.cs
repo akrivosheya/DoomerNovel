@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 using Factory;
+using System.Linq;
 
 namespace UI.Dialogue.Elements
 {
@@ -13,6 +15,7 @@ namespace UI.Dialogue.Elements
         [SerializeField] private string _id;
 
         [SerializeField] private string _defaultId = "_";
+        [SerializeField] private char _idsSeparator = '.';
         [SerializeField] private int _idIndex = 0;
         [SerializeField] private int _xPositionIndex = 1;
         [SerializeField] private int _yPositionIndex = 2;
@@ -30,6 +33,7 @@ namespace UI.Dialogue.Elements
         public virtual void SetActive(bool isActive) { }
         public virtual void SetChild(DialogueUIElement child) { }
         public virtual void Clear() { }
+        public virtual void HandleEvent(Events.Event currentEvent) => Parent?.HandleEvent(currentEvent);
         
         public virtual void Initialize(params string[] initParameters)
         {
@@ -39,8 +43,14 @@ namespace UI.Dialogue.Elements
             float yPosition = GetFloatParameter(initParameters, _yPositionIndex);
             transform.localPosition = new Vector3(xPosition, yPosition);
         }
+        
+        public bool TryGetChild(string id, out DialogueUIElement child)
+        {
+            Stack<string> idsStack = new Stack<string>(id.Split(_idsSeparator).Reverse());
+            return TryGetChild(idsStack, out child);
+        }
 
-        public virtual bool TryGetChild(string id, out DialogueUIElement child)
+        public virtual bool TryGetChild(Stack<string> ids, out DialogueUIElement child)
         {
             child = default;
             return false;
@@ -64,6 +74,23 @@ namespace UI.Dialogue.Elements
             }
 
             return _defaultId;
+        }
+
+        protected bool TryGetChild(Stack<string> ids, out DialogueUIElement foundChild, DialogueUIElement possibleContainer)
+        {
+            string currentChildId = ids.Pop();
+            if (ids.Count == 0)
+            {
+                foundChild = possibleContainer;
+                return true;
+            }
+            else if (possibleContainer.TryGetChild(ids, out foundChild))
+            {
+                return true;
+            }
+
+            ids.Push(currentChildId);
+            return false;
         }
     }
 }

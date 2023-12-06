@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-
-using Events = UI.Dialogue.Events;
 
 namespace UI.Dialogue.Elements
 {
     public abstract class DialogueStateSO : ScriptableObject
     {
-        public abstract void HandleEvent(Events.Event newEvent);
-        public abstract void StateLateUpdate(Dictionary<Events.Event.EventTypes, Action<Events.Event>> handlers, DialogueUIElement dialogueRoot);
-        public abstract void StateUpdate();
+        public abstract void HandleEvent(Events.Event newEvent, Events.EventHandlersManager eventsManager);
+        public abstract void StateLateUpdate(DialogueUIRoot dialogueRoot, Events.EventHandlersManager eventsManager);
+        public abstract void StateUpdate(Events.EventHandlersManager eventsManager);
+        
+        public virtual void Reset() { }
     }
 }

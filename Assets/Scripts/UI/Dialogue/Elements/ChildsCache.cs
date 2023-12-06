@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -43,6 +41,11 @@ namespace UI.Dialogue.Elements
             {
                 _cache.Remove(descendentId);
             }
+        }
+
+        public void Clear()
+        {
+            _cache.Clear();
         }
     }
 }

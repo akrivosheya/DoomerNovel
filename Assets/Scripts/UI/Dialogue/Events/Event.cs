@@ -8,13 +8,17 @@ namespace UI.Dialogue.Events
 
         private Dictionary<string, string> _stringValues;
         private Dictionary<string, float> _floatValues;
+        private Dictionary<string, int> _intValues;
         private Dictionary<string, bool> _boolValues;
 
         public enum EventTypes
         {
             Continue,
             Activated,
-            Unctivated,
+            Unactivated,
+            Interacted,       
+            BeginChoice,
+            EndChoice
         }
 
 
@@ -33,6 +37,12 @@ namespace UI.Dialogue.Events
         {
             _floatValues ??= new Dictionary<string, float>();
             _floatValues.Add(key, value);
+        }
+
+        public void SetIntValue(string key, int value)
+        {
+            _intValues ??= new Dictionary<string, int>();
+            _intValues.Add(key, value);
         }
 
         public void SetBoolValue(string key, bool value)
@@ -61,6 +71,16 @@ namespace UI.Dialogue.Events
             return _floatValues[key];
         }
 
+        public int GetIntValue(string key)
+        {
+            if (_intValues is null || !_intValues.ContainsKey(key))
+            {
+                return default;
+            }
+
+            return _intValues[key];
+        }
+
         public bool GetBoolValue(string key)
         {
             if (_boolValues is null || !_boolValues.ContainsKey(key))
@@ -69,6 +89,26 @@ namespace UI.Dialogue.Events
             }
 
             return _boolValues[key];
+        }
+
+        public bool HasStringValue(string key)
+        {
+            return _stringValues is not null && _stringValues.ContainsKey(key);
+        }
+
+        public bool HasFloatValue(string key)
+        {
+            return _floatValues is not null && _floatValues.ContainsKey(key);
+        }
+
+        public bool HasIntValue(string key)
+        {
+            return _intValues is not null && _intValues.ContainsKey(key);
+        }
+
+        public bool HasBoolValue(string key)
+        {
+            return _boolValues is not null && _boolValues.ContainsKey(key);
         }
     }
 }
