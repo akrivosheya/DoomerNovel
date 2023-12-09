@@ -4,6 +4,7 @@ using UnityEngine;
 using Dialogue;
 using Factory;
 using UI.Dialogue.Elements;
+using PauseSystem;
 
 namespace UI.Dialogue
 {
@@ -16,6 +17,7 @@ namespace UI.Dialogue
         [SerializeField] private DialogueManagerSO _dialogueManager;
         [SerializeField] private FactorySO<IDialoguePresenterBehaviour> _factory;
         [SerializeField] private DialogueUIRoot _dialogueRoot;
+        [SerializeField] private PauseManager _pauseManager;
 
         private readonly string _idKey = "id";
 
@@ -37,6 +39,11 @@ namespace UI.Dialogue
                     DoBehaviours();
                 }
             });
+            _dialogueRoot.SetHandler(Events.Event.EventTypes.Exit, (currentEvent) =>
+            {
+                PauseDialogue();
+                _menuController.OnExitDialogue();
+            });
         }
 
         public void StartGame()
@@ -46,19 +53,17 @@ namespace UI.Dialogue
             DoBehaviours();
         }
 
-        public void Next()
+        public void ExitDialogue()
         {
-            if (_dialogueManager.CanContinue)
-            {
-                _dialogueManager.Continue();
-                DoBehaviours();
-            }
-            else
-            {
-                _dialogueRoot.Clear();
-                _dialogueRoot.Pause();
-                _menuController.OnFinishGame();
-            }
+            _dialogueRoot.Clear();
+            _dialogueRoot.Pause();
+            _menuController.OnFinishGame();
+        }
+
+        public void UnpauseDialogue()
+        {
+            _dialogueRoot.Unpause();
+            _pauseManager.Unpause();
         }
 
         public string GetText() => _dialogueManager.GetText();
@@ -72,6 +77,25 @@ namespace UI.Dialogue
         }
 
         public bool TryGetElement(string id, out DialogueUIElement element) => _dialogueRoot.TryGetChild(id, out element);
+
+        private void Next()
+        {
+            if (_dialogueManager.CanContinue)
+            {
+                _dialogueManager.Continue();
+                DoBehaviours();
+            }
+            else
+            {
+                ExitDialogue();
+            }
+        }
+
+        private void PauseDialogue()
+        {
+            _pauseManager.Pause();
+            _dialogueRoot.Pause();
+        }
 
         private void DoBehaviours()
         {

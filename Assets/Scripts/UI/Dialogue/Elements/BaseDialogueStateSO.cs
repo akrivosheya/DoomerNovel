@@ -10,8 +10,10 @@ namespace UI.Dialogue.Elements
         private const Events.Event.EventTypes UnactivatedEvent = Events.Event.EventTypes.Unactivated;
         private const Events.Event.EventTypes ChoiceEvent = Events.Event.EventTypes.BeginChoice;
         private const Events.Event.EventTypes SpeedUpEvent = Events.Event.EventTypes.SpeedUp;
+        private const Events.Event.EventTypes ExitEvent = Events.Event.EventTypes.Exit;
 
         private int _activeElements = 0;
+        private bool _checkedContinueEvent = false;
 
 
         public override void Reset()
@@ -29,9 +31,10 @@ namespace UI.Dialogue.Elements
                 case UnactivatedEvent:
                     _activeElements = (_activeElements > 0) ? _activeElements - 1 : 0;
                     break;
-                case ContinueEvent:
                 case ChoiceEvent:
+                case ExitEvent:
                 case SpeedUpEvent:
+                case ContinueEvent:
                     eventsManager.AddEvent(newEvent.EventType, newEvent);
                     break;
             }
@@ -44,6 +47,11 @@ namespace UI.Dialogue.Elements
                 eventsManager.HandleEvent(ChoiceEvent);
                 eventsManager.ClearEvents();
             }
+            else if (eventsManager.CanHandleEvent(ExitEvent))
+            {
+                eventsManager.HandleEvent(ExitEvent);
+                eventsManager.ClearEvents();
+            }
             else if (eventsManager.CanHandleEvent(SpeedUpEvent))
             {
                 eventsManager.HandleEvent(SpeedUpEvent);
@@ -51,6 +59,11 @@ namespace UI.Dialogue.Elements
             }
             else if (eventsManager.CanHandleEvent(ContinueEvent))
             {
+                if (!_checkedContinueEvent)
+                {
+                    _checkedContinueEvent = true;
+                    return;
+                }
                 if (_activeElements > 0)
                 {
                     dialogueRoot.InterruptPresentation();
@@ -60,12 +73,13 @@ namespace UI.Dialogue.Elements
                     eventsManager.HandleEvent(ContinueEvent);
                 }
                 eventsManager.RemoveEvent(ContinueEvent);
+                _checkedContinueEvent = false;
             }
         }
 
         public override void StateUpdate(Events.EventHandlersManager eventsManager)
         {
-            if (Input.anyKeyDown && !eventsManager.RegisteredEvent(ContinueEvent))
+            if (Input.GetKeyDown(KeyCode.Space) && !eventsManager.RegisteredEvent(ContinueEvent))
             {
                 HandleEvent(new Events.Event(ContinueEvent), eventsManager);
             }

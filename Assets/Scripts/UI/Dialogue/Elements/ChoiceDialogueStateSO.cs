@@ -6,6 +6,7 @@ namespace UI.Dialogue.Elements
     public class ChoiceDialogueStateSO : DialogueStateSO
     {
         private const Events.Event.EventTypes ChoiceEvent = Events.Event.EventTypes.EndChoice;
+        private const Events.Event.EventTypes ExitEvent = Events.Event.EventTypes.Exit;
 
 
         public override void HandleEvent(Events.Event newEvent, Events.EventHandlersManager eventsManager)
@@ -13,7 +14,8 @@ namespace UI.Dialogue.Elements
             switch (newEvent.EventType)
             {
                 case ChoiceEvent:
-                    eventsManager.AddEvent(ChoiceEvent, newEvent);
+                case ExitEvent:
+                    eventsManager.AddEvent(newEvent.EventType, newEvent);
                     break;
             }
         }
@@ -23,6 +25,11 @@ namespace UI.Dialogue.Elements
             if (eventsManager.CanHandleEvent(ChoiceEvent))
             {
                 eventsManager.HandleEvent(ChoiceEvent);
+                eventsManager.ClearEvents();
+            }
+            else if (eventsManager.CanHandleEvent(ExitEvent))
+            {
+                eventsManager.HandleEvent(ExitEvent);
                 eventsManager.ClearEvents();
             }
         }

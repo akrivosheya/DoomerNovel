@@ -5,7 +5,8 @@ namespace UI
 {
     public class MainMenuUI : MenuElementsContainerUI
     {
-        [SerializeField] private string _exitMessage = "exitMessage";
+        [SerializeField] private string _exitGameMessage = "exitMessage";
+        [SerializeField] private string _exitDialogueMessage = "exitDialogueMessage";
         [SerializeField] private string _newGameMessage = "newGameMessage";
 
         private UnityEvent _onNewGame = new UnityEvent();
@@ -27,9 +28,22 @@ namespace UI
             ShowConfirmWindow(_newGameMessage, OnConfirmNewGame, DestroyWindow);
         }
 
+        public void OnExitDialogue(UnityAction onConfirmAction, UnityAction onDenyAction)
+        {
+            ShowConfirmWindow(_exitDialogueMessage, () => 
+            {
+                DestroyWindow();
+                onConfirmAction();
+            }, () =>
+            {
+                DestroyWindow();
+                onDenyAction();
+            });
+        }
+
         public void OnExitGame()
         {
-            ShowConfirmWindow(_exitMessage, OnConfirmExit, DestroyWindow);
+            ShowConfirmWindow(_exitGameMessage, OnConfirmExit, DestroyWindow);
         }
 
         private void OnConfirmExit()

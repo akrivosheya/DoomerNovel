@@ -1105,7 +1105,7 @@ MonoBehaviour:
   _yPositionIndex: 2
   _child: {fileID: 5322331051708770755}
   _button: {fileID: 5322331052940559508}
-  _interactionEvent: 3
+  _interactionEvent: 8
 --- !u!1 &5322331053403928399
 GameObject:
   m_ObjectHideFlags: 0

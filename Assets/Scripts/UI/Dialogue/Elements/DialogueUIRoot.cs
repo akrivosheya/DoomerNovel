@@ -8,6 +8,7 @@ namespace UI.Dialogue.Elements
     public class DialogueUIRoot : CompositeDialogueUIElement
     {
         [SerializeField] private DialogueStateSO _currentState;
+        [SerializeField] private DialogueStateSO _previousState;
         [SerializeField] private DialogueStateSO _firstState;
         [SerializeField] private DialogueStateSO _pauseState;
         [SerializeField] private DialogueStateSO _choiceState;
@@ -49,9 +50,14 @@ namespace UI.Dialogue.Elements
         }
 
         public override void HandleEvent(Events.Event currentEvent) => _currentState.HandleEvent(currentEvent, _eventsManager);
-        public void Pause() => _currentState = _pauseState;
         public void BeginChoice() => _currentState = _choiceState;
         public void SpeedUp() => _currentState = _speededState;
+        public void Unpause() => _currentState = _previousState;
+        public void Pause()
+        {
+            _previousState = _currentState;
+            _currentState = _pauseState;
+        }
 
         public void SetHandler(Events.Event.EventTypes eventType, Action<Events.Event> handler) => _eventsManager.SetHandler(eventType, handler);
     }

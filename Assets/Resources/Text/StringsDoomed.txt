@@ -8,5 +8,6 @@ language:Голоса;
 confirmSettings:Думаешь,_так_будет_проще?;
 backSettings:Уже_уходишь?_Оставишь_все_как_есть?;
 exitMessage:Хочешь_убежать,_опять?;
+exitDialogueMessage:Возможно,_стоит_отдохнуть.;
 newGameMessage:Опять?_Ты_верешь,_что_будет_как-то_иначе?;
 exitGame:Сбежать

@@ -50,15 +50,8 @@ namespace UI
             SetActiveOtherElements(areActive);
         }
 
-        protected virtual void SetActiveOtherElements(bool areActive)
-        {
-
-        }
-
-        protected virtual void SetOtherElementsInterfaces()
-        {
-            
-        }
+        protected virtual void SetActiveOtherElements(bool areActive) { }
+        protected virtual void SetOtherElementsInterfaces() { }
 
         protected void ShowConfirmWindow(string message, UnityAction onConfirm, UnityAction onDeny)
         {

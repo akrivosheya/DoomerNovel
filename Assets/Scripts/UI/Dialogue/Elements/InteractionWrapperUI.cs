@@ -16,6 +16,7 @@ namespace UI.Dialogue.Elements
 
         public void OnClick()
         {
+            Debug.Log("Click");
             Events.Event newEvent = new Events.Event(_interactionEvent);
             newEvent.SetStringValue(_idKey, ID);
             Parent.HandleEvent(newEvent);

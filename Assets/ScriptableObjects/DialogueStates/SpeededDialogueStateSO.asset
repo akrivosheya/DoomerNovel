@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0abdd8ae0fe0c49995dcd46f47e324, type: 3}
   m_Name: SpeededDialogueStateSO
   m_EditorClassIdentifier: 
-  _intervalTimeSeconds: 500
+  _intervalTimeSeconds: 1

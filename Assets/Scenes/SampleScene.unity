@@ -394,6 +394,7 @@ MonoBehaviour:
   _dialogueManager: {fileID: 11400000, guid: d708ebf270aa00f48bf5c860f07a553d, type: 2}
   _factory: {fileID: 11400000, guid: 71ca0c369e672cf4a88a304516f4dd10, type: 2}
   _dialogueRoot: {fileID: 652006807}
+  _pauseManager: {fileID: 389228588}
 --- !u!1 &139973001
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,6 +816,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 363693983}
   m_CullTransparentMesh: 1
+--- !u!1 &389228587
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 389228589}
+  - component: {fileID: 389228588}
+  m_Layer: 0
+  m_Name: PauseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &389228588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389228587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e3c49a7676f2984b828ceaa8a12fc38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &389228589
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389228587}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 332.15823, y: 194.38719, z: 4.1362915}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410882314
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,6 +1406,7 @@ MonoBehaviour:
   _factory: {fileID: 11400000, guid: 1886c32b29e483a43b14f80b86249802, type: 2}
   _childs: []
   _currentState: {fileID: 11400000, guid: 2a51e95b3e5f645418327d43787ac1b1, type: 2}
+  _previousState: {fileID: 0}
   _firstState: {fileID: 11400000, guid: 2ec19942bac21cf458408cde032046e1, type: 2}
   _pauseState: {fileID: 11400000, guid: 2a51e95b3e5f645418327d43787ac1b1, type: 2}
   _choiceState: {fileID: 11400000, guid: 703342651b0c12840b1733b83cac240b, type: 2}
@@ -3006,7 +3052,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252929587}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3015,7 +3061,7 @@ RectTransform:
   - {fileID: 1392927042}
   - {fileID: 142488093}
   m_Father: {fileID: 1562876736}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3166,7 +3212,8 @@ MonoBehaviour:
   - {fileID: 2119482197}
   - {fileID: 1553694861}
   - {fileID: 176583848}
-  _exitMessage: exitMessage
+  _exitGameMessage: exitMessage
+  _exitDialogueMessage: exitDialogueMessage
   _newGameMessage: newGameMessage
 --- !u!1 &1402722514
 GameObject:
@@ -3690,8 +3737,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1252929588}
   - {fileID: 1708413860}
+  - {fileID: 1252929588}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4192,7 +4239,7 @@ RectTransform:
   - {fileID: 139414977}
   - {fileID: 652006806}
   m_Father: {fileID: 1562876736}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

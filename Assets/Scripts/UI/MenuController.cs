@@ -50,6 +50,11 @@ namespace UI
             _settings.SetActive(true);
         }
 
+        public void OnExitDialogue()
+        {
+            _mainMenu.OnExitDialogue(OnConfirmExitDialogue, OnDenyExitDialogue);
+        }
+
         private void OnApplyConfiguration()
         {
             _languageManager.OnConfigurationEvent(false);
@@ -60,6 +65,16 @@ namespace UI
         {
             _mainMenu.SetActive(true);
             _settings.SetActive(false);
+        }
+
+        private void OnConfirmExitDialogue()
+        {
+            _presenter.ExitDialogue();
+        }
+
+        private void OnDenyExitDialogue()
+        {
+            _presenter.UnpauseDialogue();
         }
     }
 }
