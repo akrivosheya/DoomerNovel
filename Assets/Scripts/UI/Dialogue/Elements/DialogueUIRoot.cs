@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 using Factory;
@@ -12,6 +11,7 @@ namespace UI.Dialogue.Elements
         [SerializeField] private DialogueStateSO _firstState;
         [SerializeField] private DialogueStateSO _pauseState;
         [SerializeField] private DialogueStateSO _choiceState;
+        [SerializeField] private DialogueStateSO _speededState;
         [SerializeField] private string _emptyId = "_";
 
         private readonly Events.EventHandlersManager _eventsManager = new Events.EventHandlersManager();
@@ -44,12 +44,14 @@ namespace UI.Dialogue.Elements
             _firstState.Reset();
             _pauseState.Reset();
             _choiceState.Reset();
+            _speededState.Reset();
             _currentState = _firstState;
         }
 
         public override void HandleEvent(Events.Event currentEvent) => _currentState.HandleEvent(currentEvent, _eventsManager);
         public void Pause() => _currentState = _pauseState;
         public void BeginChoice() => _currentState = _choiceState;
+        public void SpeedUp() => _currentState = _speededState;
 
         public void SetHandler(Events.Event.EventTypes eventType, Action<Events.Event> handler) => _eventsManager.SetHandler(eventType, handler);
     }

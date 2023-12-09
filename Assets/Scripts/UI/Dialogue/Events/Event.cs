@@ -18,7 +18,9 @@ namespace UI.Dialogue.Events
             Unactivated,
             Interacted,       
             BeginChoice,
-            EndChoice
+            EndChoice,
+            SpeedUp,
+            SpeedDown,
         }
 
 

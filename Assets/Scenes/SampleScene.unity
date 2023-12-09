@@ -1364,6 +1364,7 @@ MonoBehaviour:
   _firstState: {fileID: 11400000, guid: 2ec19942bac21cf458408cde032046e1, type: 2}
   _pauseState: {fileID: 11400000, guid: 2a51e95b3e5f645418327d43787ac1b1, type: 2}
   _choiceState: {fileID: 11400000, guid: 703342651b0c12840b1733b83cac240b, type: 2}
+  _speededState: {fileID: 11400000, guid: 87296ca4c7ffd244db74cdf0a6ff7282, type: 2}
   _emptyId: _
 --- !u!1 &683738538
 GameObject:

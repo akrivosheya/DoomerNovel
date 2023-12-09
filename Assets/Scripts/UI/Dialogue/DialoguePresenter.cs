@@ -24,10 +24,9 @@ namespace UI.Dialogue
         {
             _factory.Initialize();
             _dialogueRoot.SetHandler(Events.Event.EventTypes.Continue, (currentEvent) => Next());
-            _dialogueRoot.SetHandler(Events.Event.EventTypes.BeginChoice, (currentEvent) =>
-            {
-                _dialogueRoot.BeginChoice();
-            });
+            _dialogueRoot.SetHandler(Events.Event.EventTypes.BeginChoice, (currentEvent) => _dialogueRoot.BeginChoice());
+            _dialogueRoot.SetHandler(Events.Event.EventTypes.SpeedUp, (currentEvent) => _dialogueRoot.SpeedUp());
+            _dialogueRoot.SetHandler(Events.Event.EventTypes.SpeedDown, (currentEvent) => _dialogueRoot.Reset());
             _dialogueRoot.SetHandler(Events.Event.EventTypes.EndChoice, (currentEvent) =>
             {
                 if (currentEvent.HasIntValue(_idKey))

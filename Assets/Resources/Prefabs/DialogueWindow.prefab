@@ -121,6 +121,7 @@ MonoBehaviour:
   _yPositionIndex: 2
   _child: {fileID: 5322331053403928401}
   _button: {fileID: 5322331053492218618}
+  _interactionEvent: 7
 --- !u!1 &5322331052217121540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,6 +1044,7 @@ MonoBehaviour:
   _yPositionIndex: 2
   _child: {fileID: 5322331052470696448}
   _button: {fileID: 5322331052986423111}
+  _interactionEvent: 6
 --- !u!1 &5322331053352756245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,6 +1105,7 @@ MonoBehaviour:
   _yPositionIndex: 2
   _child: {fileID: 5322331051708770755}
   _button: {fileID: 5322331052940559508}
+  _interactionEvent: 3
 --- !u!1 &5322331053403928399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1703,3 +1706,4 @@ MonoBehaviour:
   _yPositionIndex: 2
   _child: {fileID: 5322331052398423533}
   _button: {fileID: 5322331053431007375}
+  _interactionEvent: 3
