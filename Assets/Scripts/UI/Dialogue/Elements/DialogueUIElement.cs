@@ -19,6 +19,9 @@ namespace UI.Dialogue.Elements
         [SerializeField] private int _idIndex = 0;
         [SerializeField] private int _xPositionIndex = 1;
         [SerializeField] private int _yPositionIndex = 2;
+        
+        private readonly Events.Event.EventTypes _activatedEvent = Events.Event.EventTypes.Activated;
+        private readonly Events.Event.EventTypes _unactivatedEvent = Events.Event.EventTypes.Unactivated;
 
 
         public void SetParent(DialogueUIElement parent)
@@ -32,6 +35,7 @@ namespace UI.Dialogue.Elements
         public virtual FactorySO<DialogueUIElement> GetFactory() => Parent.GetFactory();
         public virtual void SetActive(bool isActive) { }
         public virtual void SetChild(DialogueUIElement child) { }
+        public virtual void Remove(string id) { }
         public virtual void Clear() { }
         public virtual void HandleEvent(Events.Event currentEvent) => Parent?.HandleEvent(currentEvent);
         
@@ -54,6 +58,18 @@ namespace UI.Dialogue.Elements
         {
             child = default;
             return false;
+        }
+
+        public void SendActivatedEvent()
+        {
+            Events.Event newEvent = new Events.Event(_activatedEvent);
+            Parent?.HandleEvent(newEvent);
+        }
+
+        public void SendUnactivatedEvent()
+        {
+            Events.Event newEvent = new Events.Event(_unactivatedEvent);
+            Parent?.HandleEvent(newEvent);
         }
 
         private float GetFloatParameter(string[] parameters, int index)

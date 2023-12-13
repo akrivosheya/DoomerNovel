@@ -77,6 +77,18 @@ namespace UI.Dialogue.Elements
             return false;
         }
 
+        public override void Remove(string id)
+        {
+            int childIndex = Childs.FindIndex(child => child.ID == id);
+            if (childIndex >= 0)
+            {
+                DialogueUIElement child = Childs[childIndex];
+                Childs.RemoveAt(childIndex);
+                child.Clear();
+                Destroy(child.gameObject);
+            }
+        }
+
         public override void SetActive(bool isActive)
         {
             foreach (DialogueUIElement child in Childs)

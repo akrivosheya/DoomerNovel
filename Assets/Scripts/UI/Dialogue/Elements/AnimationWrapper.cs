@@ -1,37 +1,60 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace UI.Dialogue.Elements
 {
-    public class InteractionWrapperUI : DialogueUIElement
+    public class AnimationWrapper : DialogueUIElement
     {
         [SerializeField] private DialogueUIElement _child;
-        [SerializeField] private RectTransform _button;
-        [SerializeField] private Events.Event.EventTypes _interactionEvent = Events.Event.EventTypes.Interacted;
+        [SerializeField] private Animator _animator;
+        [SerializeField] private string _notInterruptingTag = "notInterrupting";
 
-        private readonly string _idKey = "id";
-        private readonly int _eventIndex = 3;
+        private readonly int _animationStateIndex = 3;
 
 
-        public void OnClick()
+        public void StartAnimation(string animationState)
         {
-            Events.Event newEvent = new Events.Event(_interactionEvent);
-            newEvent.SetStringValue(_idKey, ID);
-            Parent.HandleEvent(newEvent);
+            if (animationState == string.Empty)
+            {
+                _animator?.Play(0);
+            }
+            else
+            {
+                _animator?.Play(animationState);
+            }
+        }
+
+        public void Replay()
+        { 
+            _animator?.Play(0);
+        }
+
+        public override void InterruptPresentation()
+        {
+            if (_animator is null)
+            {
+                Debug.Log("can't interrupt " + _child.ID + ": it doesn't have animator");
+                return;
+            }
+
+            AnimatorStateInfo currentStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            if (currentStateInfo.tagHash == Animator.StringToHash(_notInterruptingTag))
+            {
+                return;
+            }
+
+            AnimatorStateInfo nextStateInfo = _animator.GetNextAnimatorStateInfo(0);
+            _animator.Play(nextStateInfo.fullPathHash);
         }
 
         public override void Initialize(params string[] initParameters)
         {
             base.Initialize(initParameters);
 
-            if (initParameters.Length > _eventIndex)
+            if (initParameters.Length > _animationStateIndex)
             {
-                string eventString = initParameters[_eventIndex];
-                if (Enum.TryParse(eventString, out Events.Event.EventTypes eventType))
-                {
-                    _interactionEvent = eventType;
-                }
+                string animationState = initParameters[_animationStateIndex];
+                StartAnimation(animationState);
             }
         }
 
@@ -42,12 +65,12 @@ namespace UI.Dialogue.Elements
             child.SetParent(this);
             child.transform.localScale = Vector3.one;
             child.transform.localPosition = Vector3.zero;
-            
-            Rect childRect = child.GetRect();
-            _button.transform.SetParent(transform);
-            _button.transform.localPosition = Vector3.zero;
-            _button.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, childRect.width);
-            _button.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, childRect.height);
+
+            _animator = child.GetComponent<Animator>();
+            if (_animator is null)
+            {
+                Debug.Log(child.ID + " doesn't has component Animator");
+            }
         }
 
         public override bool TryGetChild(Stack<string> ids, out DialogueUIElement child)
@@ -76,7 +99,7 @@ namespace UI.Dialogue.Elements
 
         public override Rect GetRect()
         {
-            return _button.rect;
+            return (_child is null) ? Rect.zero : _child.GetRect();
         }
 
         public override void Clear()

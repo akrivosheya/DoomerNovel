@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7360501574615276461}
   - component: {fileID: 7360501574615276434}
+  - component: {fileID: 3033617348281159697}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -53,6 +54,7 @@ MonoBehaviour:
   _parent: {fileID: 0}
   _id: MainBackground
   _defaultId: _
+  _idsSeparator: 46
   _idIndex: 0
   _xPositionIndex: 1
   _yPositionIndex: 2
@@ -60,6 +62,27 @@ MonoBehaviour:
   _spritesFolder: Sprites
   _minParameters: 4
   _spriteIndex: 3
+--- !u!95 &3033617348281159697
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7360501574615276460}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3af460efbc72e694e95899871ff3b1f4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7360501575761026869
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,7 +119,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 800}
+  m_SizeDelta: {x: 980, y: 694}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7360501575761026872
 CanvasRenderer:
@@ -126,7 +149,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: c959d399b36e14245aa948cbee2d867f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

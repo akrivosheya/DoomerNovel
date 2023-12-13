@@ -5,4 +5,6 @@ text=Text;
 textAnimation=TextAnimation;
 choices=ChoicesList;
 choice=ChoiceWindow;
-interaction=Interaction
+interaction=Interaction;
+animation=AnimationWrapper;
+container=ElementsContainer
