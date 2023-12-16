@@ -5,6 +5,7 @@ using Dialogue;
 using Factory;
 using UI.Dialogue.Elements;
 using PauseSystem;
+using Audio;
 
 namespace UI.Dialogue
 {
@@ -18,6 +19,7 @@ namespace UI.Dialogue
         [SerializeField] private FactorySO<IDialoguePresenterBehaviour> _factory;
         [SerializeField] private DialogueUIRoot _dialogueRoot;
         [SerializeField] private PauseManager _pauseManager;
+        [SerializeField] private AudioManager _audioManager;
 
         private readonly string _idKey = "id";
 
@@ -77,6 +79,10 @@ namespace UI.Dialogue
         }
 
         public bool TryGetElement(string id, out DialogueUIElement element) => _dialogueRoot.TryGetChild(id, out element);
+
+        public void PlaySound(string clipName) => _audioManager.PlaySound(clipName);
+
+        public void PlayMusic(string clipName) => _audioManager.PlayMusic(clipName);
 
         private void Next()
         {

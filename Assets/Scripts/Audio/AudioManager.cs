@@ -2,6 +2,7 @@ using UnityEngine;
 
 using Data;
 using Configurations;
+using System.Collections;
 
 namespace Audio
 {
@@ -16,12 +17,15 @@ namespace Audio
 
         [SerializeField] private string _ambientVolumeConfiguration = "music";
         [SerializeField] private string _soundVolumeConfiguration = "sound";
+        [SerializeField] private string _clipsFolder = "Audio";
 
+        [SerializeField] private float _musicChangingSpeed = 0.5f;
         [SerializeField] private int _minVolume = 0;
         [SerializeField] private int _maxVolume = 1;
 
         private float _ambientVolume;
         private float _soundVolume;
+        private bool _musicIsChanging = false;
 
 
         void Awake()
@@ -59,6 +63,62 @@ namespace Audio
                 _soundVolume = newSoundVolume;
                 _soundSource.volume = _soundVolume;
             }
+        }
+
+        public void PlaySound(string clipName)
+        {
+            if (!TryGetClip(clipName, out AudioClip clip))
+            {
+                Debug.Log($"Can't find clip {clipName}");
+                return;
+            }
+
+            _soundSource.PlayOneShot(clip);
+        }
+
+        public void PlayMusic(string clipName)
+        {
+            if (_musicIsChanging)
+            {
+                return;
+            }
+
+            if (!TryGetClip(clipName, out AudioClip clip))
+            {
+                Debug.Log($"Can't find clip {clipName}");
+                return;
+            }
+
+            StartCoroutine(PlayMusic(clip));
+        }
+
+        private IEnumerator PlayMusic(AudioClip clip)
+        {
+            _musicIsChanging = true;
+            float finalVolume = _ambientVolume;
+            _secondAmbientSource.clip = clip;
+            _secondAmbientSource.Play();
+
+            while (finalVolume > _secondAmbientSource.volume)
+            {
+                yield return null;
+                _secondAmbientSource.volume += _musicChangingSpeed * Time.deltaTime;
+                _mainAmbientSource.volume = finalVolume - _secondAmbientSource.volume;
+            }
+
+            _secondAmbientSource.volume = finalVolume;
+            _mainAmbientSource.volume = 0;
+            _mainAmbientSource.Stop();
+            AudioSource tmp = _secondAmbientSource;
+            _secondAmbientSource = _mainAmbientSource;
+            _mainAmbientSource = tmp;
+            _musicIsChanging = false;
+        }
+
+        private bool TryGetClip(string clipName, out AudioClip clip)
+        {
+            clip = Resources.Load<AudioClip>(System.IO.Path.Join(_clipsFolder, clipName));
+            return true;
         }
     }
 }
