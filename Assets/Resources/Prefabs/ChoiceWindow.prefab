@@ -274,7 +274,8 @@ MonoBehaviour:
   _idIndex: 0
   _xPositionIndex: 1
   _yPositionIndex: 2
-  _text: {fileID: 116571207065220035}
+  _textUI: {fileID: 116571207065220035}
+  _writingPauseSeconds: 0.025
   _textIndex: 3
 --- !u!1 &116571207456708491
 GameObject:

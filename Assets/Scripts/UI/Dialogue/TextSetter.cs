@@ -43,6 +43,7 @@ namespace UI.Dialogue
             if (element is TextUI textElement)
             {
                 textElement.SetText(text);
+                textElement.StartWriting();
             }
             else
             {

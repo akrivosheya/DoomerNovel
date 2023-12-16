@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 using UI.Dialogue.Events;
@@ -46,6 +44,7 @@ namespace UI.Dialogue.Elements
             {
                 eventsManager.HandleEvent(ContinueEvent);
                 eventsManager.RemoveEvent(ContinueEvent);
+                dialogueRoot.InterruptPresentation();
             }
         }
 
