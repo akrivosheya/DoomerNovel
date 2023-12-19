@@ -5,6 +5,8 @@ namespace UI.Dialogue.Elements
 {
     public class AnimationWrapper : DialogueUIElement
     {
+        public string CurrentAnimation { get; private set; }
+
         [SerializeField] private DialogueUIElement _child;
         [SerializeField] private Animator _animator;
         [SerializeField] private string _notInterruptingTag = "notInterrupting";
@@ -22,11 +24,19 @@ namespace UI.Dialogue.Elements
             {
                 _animator?.Play(animationState);
             }
+            
+            CurrentAnimation = animationState;
         }
 
         public void Replay()
         { 
             _animator?.Play(0);
+        }
+
+        public override void Accept(DialogueSaverVisitor visitor)
+        {
+            visitor.VisitAnimationWrapper(this);
+            _child.Accept(visitor);
         }
 
         public override void InterruptPresentation()

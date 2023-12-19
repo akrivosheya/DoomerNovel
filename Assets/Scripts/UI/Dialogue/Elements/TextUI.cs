@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,8 @@ namespace UI.Dialogue.Elements
 {
     public class TextUI : DialogueUIElement
     {
+        public string CurrentText => _text;
+
         [SerializeField] private Text _textUI;
         [SerializeField] private float _writingPauseSeconds = 0.25f;
         [SerializeField] private int _textIndex = 3;
@@ -14,6 +17,11 @@ namespace UI.Dialogue.Elements
         private bool _isWriting = false;
         private bool _isInterrupted = false;
 
+
+        public override void Accept(DialogueSaverVisitor visitor)
+        {
+            Debug.LogError("Saving text is not implemented");
+        }
 
         public override void Initialize(params string[] initParameters)
         {
@@ -64,6 +72,7 @@ namespace UI.Dialogue.Elements
         {
             _isWriting = true;
             SendActivatedEvent();
+            WaitForSeconds waitng = new WaitForSeconds(_writingPauseSeconds);
             int currentLength = 0;
             for (; currentLength < _text.Length; ++currentLength)
             {
@@ -74,7 +83,7 @@ namespace UI.Dialogue.Elements
                 }
 
                 _textUI.text = _text.Substring(0, currentLength);
-                yield return new WaitForSeconds(_writingPauseSeconds);
+                yield return waitng;
             }
 
             _isInterrupted = false;

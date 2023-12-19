@@ -16,6 +16,11 @@ namespace UI.Dialogue.Elements
         [SerializeField] private int _spriteIndex = 3;
 
 
+        public override void Accept(DialogueSaverVisitor visitor)
+        {
+            Debug.LogError("Saving image is not implemented");
+        }
+
         public override void Initialize(params string[] initParameters)
         {
             if (initParameters.Length < _minParameters)

@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+using Data;
+
 namespace UI
 {
     public class MainMenuUI : MenuElementsContainerUI
     {
+        [SerializeField] private SaveManagerSO _saveManager;
+
         [SerializeField] private string _exitGameMessage = "exitMessage";
         [SerializeField] private string _exitDialogueMessage = "exitDialogueMessage";
         [SerializeField] private string _newGameMessage = "newGameMessage";
@@ -54,6 +58,7 @@ namespace UI
         private void OnConfirmNewGame()
         {
             DestroyWindow();
+            _saveManager.ResetSaveData();
             _onNewGame.Invoke();
         }
     }

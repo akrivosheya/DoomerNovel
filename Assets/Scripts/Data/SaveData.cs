@@ -2,10 +2,13 @@ namespace Data
 {
     public struct SaveData
     {
-        public string SaveImage { get; private set; }
-        public string SaveInformation { get; private set; }
-        public string DialogueState { get; private set; }
-        public string SceneState { get; private set; }
+        public static SaveData EmptyData { get; } = new SaveData() { IsEmpty=true };
+        public string SaveImage { get; }
+        public string SaveInformation { get; }
+        public string DialogueState { get; }
+        public string SceneState { get; }
+        public bool IsEmpty { get; private set; }
+
 
         public SaveData(string saveImage, string saveInformation, string dialogueState, string sceneState)
         {
@@ -13,6 +16,15 @@ namespace Data
             SaveInformation = saveInformation;
             DialogueState = dialogueState;
             SceneState = sceneState;
+            IsEmpty = false;
         }
+
+        public SaveData(SaveDataDTO saveDataDTO) :
+        this(
+            saveDataDTO.SaveImage,
+            saveDataDTO.SaveInformation,
+            saveDataDTO.DialogueState,
+            saveDataDTO.SceneState
+        ) { }
     }
 }

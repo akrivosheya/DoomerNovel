@@ -8,11 +8,13 @@ namespace UI
 {
     public class MenuElementsContainerUI : MonoBehaviour, IActivatingUIElement
     {
+        [SerializeField] private GameObject _messageWindowPrefab;
         [SerializeField] private GameObject _confirmWindowPrefab;
         [SerializeField] private LanguageManagerSO _languageManager;
         [SerializeField] List<GameObject> _elements = new List<GameObject>();
 
 
+        private GameObject _messageWindow;
         private GameObject _confirmWindow;
         private List<IActivatingUIElement> _activatingUI = new List<IActivatingUIElement>();
 
@@ -58,20 +60,51 @@ namespace UI
             _confirmWindow = Instantiate(_confirmWindowPrefab);
             if (!(_confirmWindow is null) && _confirmWindow.TryGetComponent(out ConfirmWindowUI confirmWindowConfiguration))
             {
-                _confirmWindow.transform.SetParent(transform);
-                _confirmWindow.transform.localScale = Vector3.one;
-                _confirmWindow.transform.localPosition = Vector3.zero;
-
-                confirmWindowConfiguration.Message = _languageManager.GetText(message);
-                confirmWindowConfiguration.AddListenerOnConfirm(onConfirm);
+                ConfigureMessageWindow(confirmWindowConfiguration, message, onConfirm);
                 confirmWindowConfiguration.AddListenerOnDeny(onDeny);
             }
+            else
+            {
+                DestroyObject(_confirmWindow);
+            }
+        }
+
+        protected void ShowMessageWindow(string message, UnityAction onConfirm)
+        {
+            _messageWindow = Instantiate(_messageWindowPrefab);
+            if (!(_messageWindow is null) && _messageWindow.TryGetComponent(out MessageWindowUI messageWindowConfiguration))
+            {
+                ConfigureMessageWindow(messageWindowConfiguration, message, onConfirm);
+            }
+            else
+            {
+                DestroyObject(_messageWindow);
+            }
+        }
+
+        private void ConfigureMessageWindow(MessageWindowUI messageWindowConfiguration, string message, UnityAction onConfirm)
+        {
+                messageWindowConfiguration.transform.SetParent(transform);
+                messageWindowConfiguration.transform.localScale = Vector3.one;
+                messageWindowConfiguration.transform.localPosition = Vector3.zero;
+
+                messageWindowConfiguration.Message = _languageManager.GetText(message);
+                messageWindowConfiguration.AddListenerOnConfirm(onConfirm);
         }
 
         protected void DestroyWindow()
         {
-            Destroy(_confirmWindow);
-            _confirmWindow = null;
+            DestroyObject(_confirmWindow);
+            DestroyObject(_messageWindow);
+        }
+
+        private void DestroyObject(GameObject gameObject)
+        {
+            if (gameObject is not null)
+            {
+                Destroy(gameObject);
+                gameObject = null;
+            }
         }
     }
 }

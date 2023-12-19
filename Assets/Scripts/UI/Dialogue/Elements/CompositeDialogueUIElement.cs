@@ -16,6 +16,23 @@ namespace UI.Dialogue.Elements
         private readonly ChildsCache _cache = new ChildsCache();
 
 
+        public override void Accept(DialogueSaverVisitor visitor)
+        {
+            AcceptOwnElement(visitor);
+
+            AcceptChildren(visitor);
+        }
+
+        public void AcceptChildren(DialogueSaverVisitor visitor)
+        {
+            foreach (DialogueUIElement child in Childs)
+            {
+                child.Accept(visitor);
+            }
+        }
+
+        protected abstract void AcceptOwnElement(DialogueSaverVisitor visitor);
+
         public override void SetChild(DialogueUIElement newChild)
         {
             if (!Childs.Any(child => child.ID == newChild.ID))

@@ -46,11 +46,19 @@ namespace UI.Dialogue
                 PauseDialogue();
                 _menuController.OnExitDialogue();
             });
+            _dialogueRoot.SetHandler(Events.Event.EventTypes.Save, (currentEvent) =>
+            {
+                PauseDialogue();
+                _dialogueRoot.SetActive(false);
+                _menuController.OnSaveDialogue();
+            });
+            PauseDialogue();
         }
 
         public void StartGame()
         {
             _dialogueManager.LoadDialogue();
+            UnpauseDialogue();
             _dialogueRoot.Reset();
             DoBehaviours();
         }
@@ -58,7 +66,6 @@ namespace UI.Dialogue
         public void ExitDialogue()
         {
             _dialogueRoot.Clear();
-            _dialogueRoot.Pause();
             _menuController.OnFinishGame();
         }
 
@@ -66,6 +73,19 @@ namespace UI.Dialogue
         {
             _dialogueRoot.Unpause();
             _pauseManager.Unpause();
+        }
+
+        public void ContinueDialogue()
+        {
+            UnpauseDialogue();
+            _dialogueRoot.SetActive(true);
+        }
+
+        public void SaveDialogue()
+        {
+            DialogueSaverVisitor visitor = new DialogueSaverVisitor();
+            _dialogueRoot.Accept(visitor);
+            _dialogueManager.SaveDialogue(visitor.GetSavedDialogueState());
         }
 
         public string GetText() => _dialogueManager.GetText();

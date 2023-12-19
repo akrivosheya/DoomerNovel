@@ -14,6 +14,11 @@ namespace UI.Dialogue.Elements
         private readonly int _eventIndex = 3;
 
 
+        public override void Accept(DialogueSaverVisitor visitor)
+        {
+            Debug.LogError("Saving interaction is not implemented");
+        }
+        
         public void OnClick()
         {
             Events.Event newEvent = new Events.Event(_interactionEvent);

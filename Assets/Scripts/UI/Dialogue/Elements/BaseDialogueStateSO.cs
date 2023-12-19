@@ -11,6 +11,7 @@ namespace UI.Dialogue.Elements
         private const Events.Event.EventTypes ChoiceEvent = Events.Event.EventTypes.BeginChoice;
         private const Events.Event.EventTypes SpeedUpEvent = Events.Event.EventTypes.SpeedUp;
         private const Events.Event.EventTypes ExitEvent = Events.Event.EventTypes.Exit;
+        private const Events.Event.EventTypes SaveEvent = Events.Event.EventTypes.Save;
 
         private int _activeElements = 0;
         private bool _checkedContinueEvent = false;
@@ -32,6 +33,7 @@ namespace UI.Dialogue.Elements
                     _activeElements = (_activeElements > 0) ? _activeElements - 1 : 0;
                     break;
                 case ChoiceEvent:
+                case SaveEvent:
                 case ExitEvent:
                 case SpeedUpEvent:
                 case ContinueEvent:
@@ -45,6 +47,11 @@ namespace UI.Dialogue.Elements
             if (eventsManager.CanHandleEvent(ChoiceEvent))
             {
                 eventsManager.HandleEvent(ChoiceEvent);
+                eventsManager.ClearEvents();
+            }
+            else if (eventsManager.CanHandleEvent(SaveEvent))
+            {
+                eventsManager.HandleEvent(SaveEvent);
                 eventsManager.ClearEvents();
             }
             else if (eventsManager.CanHandleEvent(ExitEvent))

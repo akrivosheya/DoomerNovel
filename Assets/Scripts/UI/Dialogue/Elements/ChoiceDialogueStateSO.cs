@@ -7,6 +7,7 @@ namespace UI.Dialogue.Elements
     {
         private const Events.Event.EventTypes ChoiceEvent = Events.Event.EventTypes.EndChoice;
         private const Events.Event.EventTypes ExitEvent = Events.Event.EventTypes.Exit;
+        private const Events.Event.EventTypes SaveEvent = Events.Event.EventTypes.Save;
 
 
         public override void HandleEvent(Events.Event newEvent, Events.EventHandlersManager eventsManager)
@@ -14,6 +15,7 @@ namespace UI.Dialogue.Elements
             switch (newEvent.EventType)
             {
                 case ChoiceEvent:
+                case SaveEvent:
                 case ExitEvent:
                     eventsManager.AddEvent(newEvent.EventType, newEvent);
                     break;
@@ -25,6 +27,11 @@ namespace UI.Dialogue.Elements
             if (eventsManager.CanHandleEvent(ChoiceEvent))
             {
                 eventsManager.HandleEvent(ChoiceEvent);
+                eventsManager.ClearEvents();
+            }
+            else if (eventsManager.CanHandleEvent(SaveEvent))
+            {
+                eventsManager.HandleEvent(SaveEvent);
                 eventsManager.ClearEvents();
             }
             else if (eventsManager.CanHandleEvent(ExitEvent))

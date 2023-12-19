@@ -22,6 +22,7 @@ namespace UI.Dialogue.Events
             SpeedUp,
             SpeedDown,
             Exit,
+            Save,
         }
 
 

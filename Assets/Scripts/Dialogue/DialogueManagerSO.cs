@@ -22,6 +22,11 @@ namespace Dialogue
         private readonly string _emptyString = "";
 
 
+        public void SaveDialogue(string sceneState)
+        {
+            _loader.SaveDialogue(sceneState, _currentDialogue.GetDialogueState());
+        }
+
         public void LoadDialogue()
         {
             _currentDialogue = _loader.LoadDialogue();

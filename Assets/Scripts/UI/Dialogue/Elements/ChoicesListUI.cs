@@ -1,11 +1,14 @@
 using UnityEngine;
 
 using Factory;
+using System.Collections.Generic;
 
 namespace UI.Dialogue.Elements
 {
     public class ChoicesListUI : CompositeDialogueUIElement
     {
+        public int ChoicesCount { get => Childs.Count; }
+
         [SerializeField] private string _interactionWrapperId = "interaction";
         [SerializeField] private string _idDelim = "_";
         [SerializeField] private float _choicesOffset = 100f;
@@ -85,6 +88,13 @@ namespace UI.Dialogue.Elements
             Events.Event newEvent = new Events.Event(_endChoiceEvent);
             newEvent.SetIntValue(_idKey, wrapperIndex);
             Parent.HandleEvent(newEvent);
+        }
+
+        protected override void AcceptOwnElement(DialogueSaverVisitor visitor) { }
+
+        public override void Accept(DialogueSaverVisitor visitor)
+        {
+            visitor.VisitChoicesList(this);
         }
     }
 }

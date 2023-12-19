@@ -11,6 +11,7 @@ namespace Dialogue
         public bool HasChoices { get => _story.currentChoices.Count > 0; }
 
         private Story _story;
+        private List<string> _loadedMetadata = new List<string>();
 
 
         public InkDialogue(string text)
@@ -18,9 +19,24 @@ namespace Dialogue
             _story = new Story(text);
         }
 
+        public string GetDialogueState()
+        {
+            return (_story is null) ? string.Empty : _story.state.ToJson();
+        }
+
         public void Reset()
         {
             _story.ResetState();
+        }
+
+        public void SetState(string stateJson)
+        {
+            _story.state.LoadJson(stateJson);
+        }
+
+        public void SetMetadata(List<string> metadata)
+        {
+            _loadedMetadata = metadata;
         }
 
         public void Continue()
@@ -63,6 +79,13 @@ namespace Dialogue
 
         public List<string> GetMetadata()
         {
+            if (_loadedMetadata.Count > 0)
+            {
+                List<string> returnMetadata = _loadedMetadata;
+                _loadedMetadata = new List<string>();
+                return returnMetadata;
+            }
+
             if (!HasChoices)
             {
                 return _story.currentTags;

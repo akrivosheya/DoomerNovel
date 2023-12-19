@@ -29,8 +29,19 @@ namespace UI.Dialogue.Elements
             Parent = parent;
             transform.SetParent(parent.transform);
         }
+
+        public string GetFullId()
+        {
+            return (Parent is null) ? ID : Parent.GetFullId() + ID;
+        }
+
+        public Vector3 GetPosition()
+        {
+            return transform.position;
+        }
         
         public abstract Rect GetRect();
+        public abstract void Accept(DialogueSaverVisitor visitor);
         public virtual void InterruptPresentation() { }
         public virtual FactorySO<DialogueUIElement> GetFactory() => Parent.GetFactory();
         public virtual void SetActive(bool isActive) { }

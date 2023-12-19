@@ -60,5 +60,7 @@ namespace UI.Dialogue.Elements
         }
 
         public void SetHandler(Events.Event.EventTypes eventType, Action<Events.Event> handler) => _eventsManager.SetHandler(eventType, handler);
+
+        protected override void AcceptOwnElement(DialogueSaverVisitor visitor) { }
     }
 }
