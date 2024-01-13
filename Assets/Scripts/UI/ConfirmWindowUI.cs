@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
-
 namespace UI
 {
     public class ConfirmWindowUI : MessageWindowUI
@@ -13,6 +11,7 @@ namespace UI
 
         public void AddListenerOnDeny(UnityAction onDenyAction)
         {
+            _onDeny.RemoveAllListeners();
             _onDeny.AddListener(onDenyAction);
         }
 

@@ -1,0 +1,8 @@
+text=UI.Dialogue.TextSetter;
+animation=UI.Dialogue.AnimationSetter;
+choices=UI.Dialogue.ChoicesSetter;
+add=UI.Dialogue.UIElementAdder;
+audio=UI.Dialogue.AudioLauncher;
+remove=UI.Dialogue.Remover;
+default=UI.Dialogue.DefaultInitialization;
+clear=UI.Dialogue.Clearer
